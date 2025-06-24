@@ -42,17 +42,6 @@ class RegisterUser(AbstractBaseUser,PermissionsMixin):
     def __str__(self):
         return self.name
 
-class Patient(models.Model):
-    first_name = models.CharField(max_length = 100)
-    last_name = models.CharField(max_length = 100)
-    email = models.EmailField(max_length = 100)
-    address = models.TextField(max_length = 100)
-    created_by =models.ForeignKey(RegisterUser, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.first_name + " " + self.last_name
-    
-
 class Doctor(models.Model):
     first_name = models.CharField(max_length = 100)
     last_name = models.CharField(max_length = 100)
@@ -64,14 +53,29 @@ class Doctor(models.Model):
     def __str__(self):
         return self.first_name + " " + self.last_name
 
-    
-class PatientDoctorMapping(models.Model):
-    patient = models.ManyToManyField(Patient)
-    doctor = models.ManyToManyField(Doctor)
+class Patient(models.Model):
+    first_name = models.CharField(max_length = 100)
+    last_name = models.CharField(max_length = 100)
+    email = models.EmailField(max_length = 100)
+    address = models.TextField()
+    created_by =models.ForeignKey(RegisterUser, on_delete=models.CASCADE)
+    doctor = models.ManyToManyField(Doctor,related_name='patients', through='Intermediate')
 
     def __str__(self):
-        return self.patient.email
+        return self.first_name + " " + self.last_name
+
+class Intermediate(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     
+
+
+    
+
+
+
+    
+
 
 
     

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import RegisterUser,Patient,Doctor
+from .models import RegisterUser,Patient,Doctor,Intermediate
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only = True)
@@ -48,4 +48,24 @@ class DoctorSerializer(serializers.ModelSerializer):
             created_by =user
         )
         return doctor
+
+class IntermediateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Intermediate
+        fields =(
+            'id',
+            'patient',
+            'doctor',
+        )
+        
+
+
+
+
+
+            
+
+
+
+
 
