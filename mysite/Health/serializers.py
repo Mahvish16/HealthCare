@@ -36,4 +36,16 @@ class PatientSerializer(serializers.ModelSerializer):
 class DoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
-        fields = ('first_name','last_name', 'email','specialist', 'phone_number', )
+        fields = ('id','first_name','last_name', 'email','specialist', 'phone_number')
+    def create(self, validated_data):
+        user = self.context['request'].user
+        doctor = Doctor.objects.create(
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            email=validated_data['email'],
+            specialist=validated_data['specialist'],
+            phone_number=validated_data['phone_number'],
+            created_by =user
+        )
+        return doctor
+

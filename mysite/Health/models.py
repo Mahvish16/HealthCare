@@ -58,7 +58,7 @@ class Doctor(models.Model):
     last_name = models.CharField(max_length = 100)
     email = models.EmailField(max_length = 100)
     specialist = models.CharField(max_length=50)
-    phone_number =models.IntegerField(max_length = 10)
+    phone_number =models.IntegerField()
     created_by =models.ForeignKey(RegisterUser, on_delete=models.CASCADE)
 
     def __str__(self):
