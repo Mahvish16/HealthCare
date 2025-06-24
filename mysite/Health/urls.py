@@ -14,7 +14,7 @@ urlpatterns = [
     path('api/doctors/', DoctorView.as_view(), name='doctor-list'),
     path('api/doctors/<int:id>/',DoctorView.as_view(), name='doctor-list'),
     path('api/mapping/', MappingView.as_view(), name='mapping-list'),
-     path('api/mapping/<int:id>/', MappingView.as_view(), name='mapping-list'),
+    path('api/mapping/<int:id>/', MappingView.as_view(), name='mapping-list'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

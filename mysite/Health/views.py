@@ -49,7 +49,7 @@ class PatientView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         patient_id = kwargs.get('id')
         if patient_id:
-            patient = get_object_or_404(Patient, id=patient_id, created_by=request.user)
+            patient = get_object_or_404(Patient, id=patient_id)
             serializer = self.get_serializer(patient)
             return Response(serializer.data)
         else:
@@ -58,7 +58,7 @@ class PatientView(generics.GenericAPIView):
         return Response(serializer.data)
         
     def put(self, request, id, *args, **kwargs):
-        patient = get_object_or_404(Patient, id=id, created_by=request.user)
+        patient = get_object_or_404(Patient, id=id)
         serializer = self.get_serializer(patient, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -66,7 +66,7 @@ class PatientView(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self,request, id , *args, **kwargs):
-        patient = get_object_or_404(Patient, id=id, created_by=request.user)
+        patient = get_object_or_404(Patient, id=id)
         patient.delete()
         return Response({"message": "Patient deleted successfully"}, status=status.HTTP_200_OK)
 
@@ -84,16 +84,16 @@ class DoctorView(generics.GenericAPIView):
     def get(self,request, *args, **kwargs):
         doctor_id = kwargs.get('id')
         if doctor_id:
-            doctor = get_object_or_404(Doctor, id=doctor_id, created_by=request.user)
+            doctor = get_object_or_404(Doctor, id=doctor_id)
             serializer = self.get_serializer(doctor)
             return Response(serializer.data)
         else:
-            doctors = Doctor.objects.filter(created_by=request.user)
+            doctors = Doctor.objects.all()
             serializer = self.get_serializer(doctors, many=True)
             return Response(serializer.data)
-
+            
     def put(self,request,id, *args, **kwargs):
-        doctor = get_object_or_404(Doctor, id=id, created_by=request.user)
+        doctor = get_object_or_404(Doctor, id=id)
         serializer = self.get_serializer(doctor, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -101,7 +101,7 @@ class DoctorView(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self,request,id,*args, **kwargs):
-        doctor = get_object_or_404(Doctor, id=id, created_by=request.user)
+        doctor = get_object_or_404(Doctor, id=id)
         doctor.delete()
         return Response({"message": "Doctor deleted successfully"}, status=status.HTTP_200_OK)
 
@@ -119,15 +119,20 @@ class MappingView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         patient_id = kwargs.get('id')
         if patient_id:
-           mapping = Intermediate.objects.filter(patient_id=patient_id, patient__created_by=request.user)
+           mapping = Intermediate.objects.filter(patient_id=patient_id)
+           if not mapping.exists():
+            return Response(
+                {"detail": "Patient ID not found."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+           
         else:
-            mapping = Intermediate.objects.filter(patient__created_by=request.user)
-    
+            mapping = Intermediate.objects.all()
         serializer = self.get_serializer(mapping, many=True)
         return Response(serializer.data)
 
     def delete(self,request,id, *args, **kwargs):
-        mapping = get_object_or_404(Intermediate, id=id, patient__created_by=request.user)
+        mapping = get_object_or_404(Intermediate, id=id)
         mapping.delete()
         return Response({"message": "Mapping deleted successfully"}, status=status.HTTP_200_OK)
         
