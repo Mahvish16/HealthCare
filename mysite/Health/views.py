@@ -8,6 +8,8 @@ from .serializers import RegisterSerializer, LoginSerializer,PatientSerializer
 from rest_framework.response import Response;
 from rest_framework import status;
 from django.contrib.auth import authenticate
+from django.shortcuts import get_object_or_404
+
 
 
 # Create your views here.
@@ -17,7 +19,7 @@ class RegisterView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"message": "User created successfully, Please Verify your email"}, status=status.HTTP_201_CREATED)
+            return Response({"message": "User created successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginView(generics.GenericAPIView):
@@ -40,14 +42,34 @@ class PatientView(generics.GenericAPIView):
     def post(self,request, *args,**kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=request.user)
+            serializer.save()
             return Response({"message": "Patient created successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, *args, **kwargs):
-        id = kwargs.get
-        patients = Patient.objects.all()
-        serializer = self.get_serializer(patients, many=True)
+        patient_id = kwargs.get('id')
+        if patient_id:
+            patient = get_object_or_404(Patient, id=patient_id, created_by=request.user)
+            serializer = self.get_serializer(patient)
+            return Response(serializer.data)
+        else:
+            patients = Patient.objects.filter(created_by=request.user)
+            serializer = self.get_serializer(patients, many=True)
         return Response(serializer.data)
+        
+    def put(self, request, id, *args, **kwargs):
+        patient = get_object_or_404(Patient, id=id, created_by=request.user)
+        serializer = self.get_serializer(patient, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Patient updated successfully"}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self,request, id , *args, **kwargs):
+        patient = get_object_or_404(Patient, id=id, created_by=request.user)
+        patient.delete()
+        return Response({"message": "Patient deleted successfully"}, status=status.HTTP_200_OK)
+
+
 
 
