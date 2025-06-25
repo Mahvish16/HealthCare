@@ -37,7 +37,7 @@ Follow the steps below to set up the project locally on **Windows**:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/healthcare-backend.git
+git clone https://github.com/Mahvish16/HealthCare
 cd healthcare-backend
 ```
 
