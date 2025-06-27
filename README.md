@@ -1,10 +1,8 @@
-# 🏥 Django Healthcare Backend API
+# Django Healthcare Backend API
 
 A secure and RESTful backend system for a healthcare application using **Django**, **Django REST Framework**, **PostgreSQL**, and **JWT authentication**. This system supports user registration, login, and full CRUD operations for patients and doctors, including a patient-doctor mapping feature.
 
----
-
-## 🎯 Objective
+## Objective
 
 Build a backend system that:
 
@@ -14,9 +12,7 @@ Build a backend system that:
 - Uses environment variables for sensitive configurations.
 - Stores data securely using PostgreSQL.
 
----
-
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Technology         | Purpose                        |
 |--------------------|--------------------------------|
@@ -28,9 +24,7 @@ Build a backend system that:
 | python-dotenv      | Environment Variable Management|
 | venv               | Virtual Environment (Python)   |
 
----
-
-## ⚙️ Project Setup (Windows)
+## Project Setup (Windows)
 
 Follow the steps below to set up the project locally on **Windows**:
 
@@ -100,9 +94,7 @@ python manage.py runserver
 
 Visit: `http://127.0.0.1:8000/`
 
----
-
-## 🔐 Authentication (JWT)
+## Authentication (JWT)
 
 After logging in, you will receive:
 
@@ -119,20 +111,16 @@ Include the access token in headers for protected routes:
 Authorization: Bearer <access_token>
 ```
 
----
+## API Endpoints
 
-## 🔗 API Endpoints
-
-### 🔑 Authentication
+### Authentication
 
 | Method | Endpoint                | Description            |
 |--------|-------------------------|------------------------|
 | POST   | `/api/auth/register/`   | Register new user      |
 | POST   | `/api/auth/login/`      | User login (get token) |
 
----
-
-### 🧑‍⚕️ Patient APIs
+###  Patient APIs
 
 | Method | Endpoint                   | Description                            |
 |--------|----------------------------|----------------------------------------|
@@ -142,9 +130,8 @@ Authorization: Bearer <access_token>
 | PUT    | `/api/patients/<id>/`      | Update a patient's details             |
 | DELETE | `/api/patients/<id>/`      | Delete a patient                       |
 
----
 
-### 👨‍⚕️ Doctor APIs
+### Doctor APIs
 
 | Method | Endpoint                   | Description                            |
 |--------|----------------------------|----------------------------------------|
@@ -154,9 +141,8 @@ Authorization: Bearer <access_token>
 | PUT    | `/api/doctors/<id>/`       | Update a doctor's details              |
 | DELETE | `/api/doctors/<id>/`       | Delete a doctor                        |
 
----
 
-### 🔁 Patient-Doctor Mapping APIs
+### Patient-Doctor Mapping APIs
 
 | Method | Endpoint                             | Description                                  |
 |--------|--------------------------------------|----------------------------------------------|
@@ -165,9 +151,7 @@ Authorization: Bearer <access_token>
 | GET    | `/api/mappings/<patient_id>/`        | Get doctors assigned to a specific patient   |
 | DELETE | `/api/mappings/<id>/`                | Remove doctor from a patient                 |
 
----
-
-## ✅ Testing APIs
+##  Testing APIs
 
 You can test APIs using:
 
@@ -181,9 +165,7 @@ Example header for authorized requests:
 Authorization: Bearer your_access_token_here
 ```
 
----
-
-## 📁 Project Structure
+##  Project Structure
 
 ```
 healthcare-backend/
@@ -202,9 +184,7 @@ healthcare-backend/
 └── README.md
 ```
 
----
-
-## 📄 .gitignore
+##  .gitignore
 
 ```
 *.pyc
@@ -215,15 +195,8 @@ backup
 db.sqlite3
 ```
 
----
-
-
----
-
-## 📜 License
+##  License
 
 This project is created for educational and showcasing purposes.
 
----
-
-## 🚀 All Set! Happy Coding!
+##  All Set! Happy Coding!
